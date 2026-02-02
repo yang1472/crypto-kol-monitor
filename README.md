@@ -1,254 +1,367 @@
+<div align="center">
+
 # 🚀 Crypto KOL Monitor v2.1
 
-**多平台数据聚合 + 真实AI分析** 的币圈信号监控系统。
+**中文** | [English](#english)
 
-## ✨ 核心特性
+多平台数据聚合 + AI智能分析 的币圈信号监控系统
 
-- 🔗 **多平台聚合** - DexScreener + Birdeye + Helius 多数据源
-- 🤖 **真实AI分析** - 支持 DeepSeek / MiniMax / 规则AI
-- 🧠 **智能路由** - AI故障自动切换，保证服务稳定
-- 📊 **深度分析** - 风险评估、入场策略、仓位建议
-- 🎯 **精准推送** - 只推送高置信度的交易机会
+Multi-Platform Data Aggregation + AI-Powered Crypto Signal Monitoring System
 
-## 🏗️ 系统架构
+[![Node.js](https://img.shields.io/badge/Node.js-18+-green.svg)](https://nodejs.org/)
+[![TypeScript](https://img.shields.io/badge/TypeScript-5.0+-blue.svg)](https://www.typescriptlang.org/)
+[![License](https://img.shields.io/badge/License-MIT-yellow.svg)](LICENSE)
+[![Railway](https://img.shields.io/badge/Deploy%20on-Railway-purple.svg)](https://railway.app)
+
+</div>
+
+---
+
+## 📋 目录 Table of Contents
+
+- [功能特性 Features](#-功能特性-features)
+- [系统架构 Architecture](#-系统架构-architecture)
+- [快速开始 Quick Start](#-快速开始-quick-start)
+- [配置说明 Configuration](#-配置说明-configuration)
+- [部署指南 Deployment](#-部署指南-deployment)
+- [API额度说明 API Quotas](#-api额度说明-api-quotas)
+- [常见问题 FAQ](#-常见问题-faq)
+- [免责声明 Disclaimer](#-免责声明-disclaimer)
+
+---
+
+## ✨ 功能特性 Features
+
+### 🇨🇳 中文
+
+- 🔗 **多平台聚合** - 整合 DexScreener、Birdeye、Helius 等多个数据源
+- 🤖 **AI智能分析** - 支持 DeepSeek / MiniMax / 规则AI，自动故障转移
+- 📊 **智能去重** - 多平台相同信号自动合并，避免重复推送
+- 🎯 **动态评分** - 基于交易量、流动性、持有者等多维度评分
+- 💡 **完整策略** - 自动建议仓位大小、止损止盈、时间周期
+- 📱 **Discord通知** - 实时推送高置信度交易机会
+- 🔄 **24/7监控** - 全天候自动扫描市场
+
+### 🇺🇸 English
+
+- 🔗 **Multi-Platform Aggregation** - Integrates DexScreener, Birdeye, Helius data sources
+- 🤖 **AI-Powered Analysis** - Supports DeepSeek / MiniMax / Rule-based AI with auto-failover
+- 📊 **Smart Deduplication** - Merges duplicate signals across platforms
+- 🎯 **Dynamic Scoring** - Multi-dimensional scoring based on volume, liquidity, holders
+- 💡 **Complete Strategy** - Auto-suggests position size, stop-loss, take-profit, time horizon
+- 📱 **Discord Notifications** - Real-time push of high-confidence opportunities
+- 🔄 **24/7 Monitoring** - Round-the-clock market scanning
+
+---
+
+## 🏗️ 系统架构 Architecture
 
 ```
 ┌─────────────────────────────────────────────────────────────┐
-│                      数据层 (Data Sources)                    │
+│                      数据层 Data Layer                        │
 ├──────────────┬──────────────┬──────────────┬────────────────┤
 │ DexScreener  │   Birdeye    │    Helius    │   Solscan      │
-│  (免费API)   │  (100次/天)  │(100万次/月)  │   (可选)       │
+│  (Free API)  │ (100req/day) │(1M req/month)│   (Optional)   │
 └──────┬───────┴──────┬───────┴──────┬───────┴───────┬────────┘
        │              │              │               │
        └──────────────┴──────┬───────┴───────────────┘
                              ▼
                   ┌─────────────────────┐
-                  │     信号聚合器       │
-                  │  • 多平台数据合并    │
-                  │  • 智能去重         │
-                  │  • 综合评分         │
+                  │   信号聚合器         │
+                  │  Signal Aggregator  │
+                  │  • 去重合并          │
+                  │  • 风险评分          │
+                  │  • 置信度计算        │
                   └──────────┬──────────┘
                              ▼
                   ┌─────────────────────┐
-                  │     AI 路由器        │
-                  │  • DeepSeek (主)    │
-                  │  • MiniMax (备)     │
-                  │  • 规则AI (兜底)    │
+                  │    AI 路由器        │
+                  │    AI Router        │
+                  │  • DeepSeek (Primary)│
+                  │  • MiniMax (Backup) │
+                  │  • Rule-based AI    │
                   └──────────┬──────────┘
                              ▼
                   ┌─────────────────────┐
-                  │     Discord通知      │
-                  │  • 富文本Embed      │
-                  │  • 一键查看图表      │
-                  │  • 实时推送         │
+                  │   Discord通知       │
+                  │ Discord Notifications│
                   └─────────────────────┘
 ```
 
-## 📦 快速开始
+---
 
-### 1. 安装依赖
+## 🚀 快速开始 Quick Start
 
+### 🇨🇳 中文指南
+
+#### 1. 克隆项目
 ```bash
+git clone https://github.com/yang1472/crypto-kol-monitor.git
 cd crypto-kol-monitor
+```
+
+#### 2. 安装依赖
+```bash
 npm install
 ```
 
-### 2. 配置环境变量
-
+#### 3. 配置环境变量
 ```bash
 cp .env.example .env
-# 编辑 .env 填入你的API密钥
+# 编辑 .env 文件，填入你的API密钥
 ```
 
-**必需配置：**
+**必需配置 Required Configuration：**
 ```env
-# Discord (必需)
+# Discord配置 Discord Config
 DISCORD_BOT_TOKEN=your_discord_bot_token
 DISCORD_CHANNEL_ID=your_discord_channel_id
 
-# AI提供商 (至少一个)
-DEEPSEEK_API_KEY=your_deepseek_key      # 推荐
-MINIMAX_API_KEY=your_minimax_key        # 备用
-
-# 可选数据源
-HELIUS_API_KEY=your_helius_key          # Solana数据
-BIRDEYE_API_KEY=your_birdeye_key        # 提高限额
+# AI提供商（至少配置一个 At least one）
+DEEPSEEK_API_KEY=your_deepseek_key
+MINIMAX_API_KEY=your_minimax_key
 ```
 
-### 3. 本地测试
-
+#### 4. 本地运行
 ```bash
-npm run dev
+npm run build
+npm start
 ```
 
-## 🤖 AI 配置说明
+### 🇺🇸 English Guide
 
-### 支持的AI提供商
-
-| 提供商 | 特点 | 免费额度 | 获取地址 |
-|--------|------|---------|---------|
-| **DeepSeek** | 国产大模型，性价比高 | 500万 tokens | https://platform.deepseek.com |
-| **MiniMax** | 中文优化好 | 100万 tokens | https://www.minimaxi.com |
-| **规则AI** | 本地计算，零成本 | 无限制 | 内置 |
-
-### AI_PROVIDER 配置
-
-```env
-# 自动选择 (推荐)
-AI_PROVIDER=auto
-
-# 强制指定
-AI_PROVIDER=deepseek    # 只用DeepSeek
-AI_PROVIDER=minimax     # 只用MiniMax
-AI_PROVIDER=rule-based  # 只用规则AI
-```
-
-### 故障转移机制
-
-```
-┌──────────────────────────────────────┐
-│  AI_PROVIDER=auto 选择逻辑            │
-├──────────────────────────────────────┤
-│  1. 检查 DeepSeek API Key            │
-│     ↓ 有 → 使用 DeepSeek             │
-│     ↓ 无                               │
-│  2. 检查 MiniMax API Key             │
-│     ↓ 有 → 使用 MiniMax              │
-│     ↓ 无                               │
-│  3. 使用规则AI (本地计算)             │
-└──────────────────────────────────────┘
-```
-
-**故障转移：**
-- DeepSeek 失败 → 自动使用 MiniMax
-- MiniMax 失败 → 自动使用规则AI
-- 确保分析永不中断
-
-## 📊 Discord通知示例
-
-```
-🟢🔥 AI推荐: GIGA (DeepSeek分析)
-✅ 多平台验证(DexScreener+Birdeye)
-✅ 高交易量：24h $2.5M
-🚀 强劲涨幅：24h +150%
-
-📊 代币信息
-名称: GIGACHAD
-价格: $0.000052
-市值: $52M
-流动性: $2.1M
-
-📈 24h数据
-涨幅: +150%
-交易量: $2.5M
-持有者: 15,420
-
-🤖 AI分析 (置信度: 87%)
-建议: 强力买入 🔥
-风险等级: 中 🟡
-
-💡 入场策略
-建议仓位: 中等仓位 ($500)
-目标周期: 短线 (1-3天)
-止损: $0.000042 (-20%)
-止盈: $0.000078 (+50%)
-
-👁️ 关键观察
-• 上线12小时，早期机会
-• 多平台数据验证
-• 交易活跃度极高
-
-⚠️ 风险提示
-• 新币风险，注意Rug Pull
-• 建议小仓位试探
-
-[🔔 追踪此币] [📊 查看图表]
-```
-
-## ⚙️ 配置参数
-
-| 变量 | 默认 | 说明 |
-|------|------|------|
-| `AI_PROVIDER` | auto | AI提供商选择 |
-| `MONITOR_INTERVAL_MINUTES` | 5 | 扫描间隔（分钟）|
-| `MIN_CONFIDENCE_SCORE` | 60 | 最小信号分数 |
-| `MIN_AI_CONFIDENCE` | 65 | AI最小置信度 |
-| `MAX_SIGNALS_PER_BATCH` | 10 | 每批最大分析数 |
-
-## 🚂 Railway部署
-
-### 1. 安装CLI
-
+#### 1. Clone Repository
 ```bash
-npm install -g @railway/cli
-railway login
-```
-
-### 2. 部署
-
-```bash
+git clone https://github.com/yourusername/crypto-kol-monitor.git
 cd crypto-kol-monitor
-railway init
-
-# 设置环境变量
-railway variables set DISCORD_BOT_TOKEN=xxx
-railway variables set DISCORD_CHANNEL_ID=xxx
-railway variables set DEEPSEEK_API_KEY=xxx
-railway variables set MINIMAX_API_KEY=xxx
-
-# 部署
-railway up
 ```
 
-### 3. 持续部署
-
-连接GitHub仓库后，每次push自动部署。
-
-## 🛡️ 安全提醒
-
-⚠️ **重要：你的API密钥已配置，请勿泄露！**
-
-- `.env` 文件已添加到 `.gitignore`，不会提交到Git
-- 不要在Discord/聊天中分享包含密钥的截图
-- Railway的环境变量是加密存储的
-
-## 📈 使用建议
-
-### 1. 小额测试
-- 先用小资金测试AI策略的有效性
-- 观察1-2周后再加大仓位
-
-### 2. 多平台验证
-- 系统已自动聚合多平台数据
-- 优先关注多平台同时出现的信号
-
-### 3. 风险控制
-- 严格遵守AI建议的止损
-- 新币(<24h)建议只用极小仓位
-
-## 🔧 故障排查
-
-### AI不工作
+#### 2. Install Dependencies
 ```bash
-# 检查AI状态
-curl https://api.deepseek.com/v1/models \
-  -H "Authorization: Bearer $DEEPSEEK_API_KEY"
+npm install
 ```
 
-### Discord不推送
-1. 检查Bot是否已加入服务器
-2. 检查频道ID是否正确
-3. 检查Bot权限（发送消息、嵌入链接）
+#### 3. Configure Environment Variables
+```bash
+cp .env.example .env
+# Edit .env file with your API keys
+```
 
-### 没有信号
-- 降低 `MIN_CONFIDENCE_SCORE` 到 50
-- 缩短 `MONITOR_INTERVAL_MINUTES` 到 3
-- 检查平台API是否正常工作
-
-## 📄 License
-
-MIT
+#### 4. Run Locally
+```bash
+npm run build
+npm start
+```
 
 ---
 
-**⚠️ 免责声明：** 本项目仅供学习和研究使用，不构成投资建议。加密货币交易存在高风险，请自行承担投资风险。
+## ⚙️ 配置说明 Configuration
+
+### 环境变量 Environment Variables
+
+| 变量名 Variable | 说明 Description | 默认值 Default | 必需 Required |
+|----------------|-----------------|---------------|--------------|
+| `DISCORD_BOT_TOKEN` | Discord Bot令牌 | - | ✅ Yes |
+| `DISCORD_CHANNEL_ID` | Discord频道ID | - | ✅ Yes |
+| `DEEPSEEK_API_KEY` | DeepSeek API密钥 | - | ⚠️ 至少一个 |
+| `MINIMAX_API_KEY` | MiniMax API密钥 | - | ⚠️ 至少一个 |
+| `AI_PROVIDER` | AI提供商选择 | `auto` | ❌ No |
+| `MONITOR_INTERVAL_MINUTES` | 扫描间隔(分钟) | `5` | ❌ No |
+| `MIN_CONFIDENCE_SCORE` | 最小信号分数 | `60` | ❌ No |
+| `MIN_AI_CONFIDENCE` | AI最小置信度 | `65` | ❌ No |
+
+### AI_PROVIDER 选项 Options
+
+| 值 Value | 说明 Description |
+|---------|-----------------|
+| `auto` | 自动选择已配置的AI Auto-select |
+| `deepseek` | 强制使用DeepSeek |
+| `minimax` | 强制使用MiniMax |
+| `rule-based` | 使用规则AI（零成本）Rule-based (zero cost) |
+
+---
+
+## 🚂 部署指南 Deployment
+
+### 方案1：Railway部署（推荐）Option 1: Railway (Recommended)
+
+#### 步骤1：准备代码 Step 1: Prepare Code
+```bash
+git add .
+git commit -m "Prepare for deployment"
+git push origin master
+```
+
+#### 步骤2：在Railway部署 Step 2: Deploy on Railway
+
+1. 访问 https://railway.app 并登录
+2. 点击 **New Project** → **Deploy from GitHub repo**
+3. 选择你的 `crypto-kol-monitor` 仓库
+4. 等待自动部署完成
+
+#### 步骤3：设置环境变量 Step 3: Set Environment Variables
+
+在Railway Dashboard中：
+- 点击 **Variables** 标签
+- 添加所有必需的环境变量
+
+#### 步骤4：查看日志 Step 4: Check Logs
+```
+Dashboard → Deployments → View Logs
+```
+
+### 方案2：本地服务器 Option 2: Local Server
+
+使用PM2进程管理器：
+```bash
+npm install -g pm2
+npm run build
+pm2 start dist/index.js --name crypto-monitor
+pm2 save
+pm2 startup
+```
+
+---
+
+## 📊 API额度说明 API Quotas
+
+### 🇨🇳 免费额度总结
+
+| 平台 | 免费额度 | 实际消耗 | 评估 |
+|------|---------|---------|------|
+| **DeepSeek** | 500万 tokens/月 | ~1000 tokens/分析 | ✅ 可分析5000次 |
+| **MiniMax** | 100万 tokens/月 | ~1000 tokens/分析 | ✅ 可分析1000次 |
+| **DexScreener** | 无限制 | ~20次/小时 | ✅ 完全免费 |
+| **Birdeye** | 100次/天 | 每次扫描3-5次 | ⚠️ 已默认禁用 |
+
+### 🇺🇸 Free Tier Summary
+
+| Platform | Free Quota | Consumption | Status |
+|----------|-----------|-------------|--------|
+| **DeepSeek** | 5M tokens/month | ~1000 tokens/analysis | ✅ 5000 analyses |
+| **MiniMax** | 1M tokens/month | ~1000 tokens/analysis | ✅ 1000 analyses |
+| **DexScreener** | Unlimited | ~20 req/hour | ✅ Completely free |
+| **Birdeye** | 100 req/day | 3-5 req/scan | ⚠️ Disabled by default |
+
+### 💡 使用建议 Recommendations
+
+**节省额度 Tips：**
+1. 调整扫描间隔为15-30分钟 `MONITOR_INTERVAL_MINUTES=30`
+2. 使用 `AI_PROVIDER=rule-based` 作为fallback
+3. 仅在市场活跃时段启用DeepSeek分析
+
+---
+
+## ❓ 常见问题 FAQ
+
+### Q: 为什么Discord收不到消息？
+**A:** 检查以下几点：
+1. Bot是否已加入Discord服务器
+2. 频道ID是否正确
+3. Bot是否有发送消息的权限
+4. 信号置信度是否达到阈值
+
+### Q: 如何降低API使用成本？
+**A:** 
+1. 增加扫描间隔 `MONITOR_INTERVAL_MINUTES=30`
+2. 降低置信度阈值 `MIN_AI_CONFIDENCE=50`
+3. 使用规则AI `AI_PROVIDER=rule-based`
+
+### Q: 支持哪些区块链？
+**A:** 当前主要支持 **Solana**，可扩展支持Ethereum、Base、BSC等。
+
+### Q: 为什么按钮点击显示"交互失败"？
+**A:** 已修复！请更新到最新版本。按钮现在可以：
+- 🔔 追踪此币：添加关注并返回确认消息
+- 📊 查看图表：跳转到DexScreener查看详情
+
+---
+
+## 🛡️ 免责声明 Disclaimer
+
+### 🇨🇳 中文
+⚠️ **重要提示：**
+1. 本项目仅供学习和研究使用，**不构成任何投资建议**
+2. 加密货币交易存在极高风险，可能导致本金全部损失
+3. AI分析结果仅供参考，不保证盈利
+4. 请遵守当地法律法规，自行承担投资风险
+
+### 🇺🇸 English
+⚠️ **Important Notice:**
+1. This project is for **educational and research purposes only**, not investment advice
+2. Cryptocurrency trading carries extreme risk of total capital loss
+3. AI analysis results are for reference only, no profit guarantee
+4. Please comply with local laws and regulations, invest at your own risk
+
+---
+
+## 🤝 贡献 Contributing
+
+欢迎提交Issue和Pull Request！
+
+Welcome to submit Issues and Pull Requests!
+
+---
+
+## 📄 许可证 License
+
+[MIT](LICENSE)
+
+---
+
+<div align="center">
+
+**Made with ❤️ by Crypto Traders, for Crypto Traders**
+
+**为交易者而生，由交易者打造**
+
+</div>
+
+---
+
+# English Version
+
+<h2 id="english"></h2>
+
+## ✨ Features
+
+- 🔗 **Multi-Platform Data Aggregation** - DexScreener + Birdeye + Helius
+- 🤖 **Real AI Analysis** - DeepSeek / MiniMax / Rule-based AI with failover
+- 📊 **Smart Signal Merging** - Deduplication across platforms
+- 🎯 **Risk Assessment** - Comprehensive risk analysis for each token
+- 💡 **Trading Strategy** - Auto position sizing, stop-loss, take-profit
+- 📱 **Discord Integration** - Rich embed notifications with actionable buttons
+
+## 🚀 Quick Start
+
+```bash
+# Clone & Install
+git clone https://github.com/yang1472/crypto-kol-monitor.git
+cd crypto-kol-monitor
+npm install
+
+# Configure
+cp .env.example .env
+# Edit .env with your API keys
+
+# Build & Run
+npm run build
+npm start
+```
+
+## 🚂 Deploy on Railway
+
+1. Fork this repository
+2. Connect to Railway: https://railway.app
+3. Add environment variables in Railway Dashboard
+4. Deploy!
+
+See full deployment guide above ↑
+
+---
+
+<div align="center">
+
+**[Back to Top ⬆️](#-crypto-kol-monitor-v21)**
+
+</div>
