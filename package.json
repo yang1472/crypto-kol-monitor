@@ -1,0 +1,29 @@
+{
+  "name": "crypto-kol-monitor",
+  "version": "1.0.0",
+  "description": "监控币圈KOL和聪明钱钱包，发送Discord通知",
+  "main": "dist/index.js",
+  "scripts": {
+    "build": "tsc",
+    "start": "node dist/index.js",
+    "dev": "ts-node src/index.ts",
+    "monitor": "ts-node src/services/monitor.ts",
+    "bot": "ts-node src/services/discordBot.ts"
+  },
+  "dependencies": {
+    "discord.js": "^14.14.1",
+    "axios": "^1.6.2",
+    "dotenv": "^16.3.1",
+    "node-cron": "^3.0.3",
+    "winston": "^3.11.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.10.4",
+    "@types/node-cron": "^3.0.11",
+    "ts-node": "^10.9.2",
+    "typescript": "^5.3.3"
+  },
+  "engines": {
+    "node": ">=18.0.0"
+  }
+}
